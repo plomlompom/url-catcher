@@ -116,7 +116,7 @@ def post_link():
                 str(start_date) + '\n' + str(attempts), 'w')
 
     # Derive page / page file name.
-    page = bottle.request.forms.get('page')
+    page = bottle.request.forms.page
     if '\0' in page or '/' in page or '.' in page or len(page.encode()) > 255:
         return bottle.HTTPResponse(messages['badPageName'], 400)
 
@@ -124,12 +124,12 @@ def post_link():
     captcha_file = open(captchas_dir + '/' + page, 'r')
     captcha_correct = captcha_file.readline().rstrip()
     captcha_file.close()
-    captcha_input = bottle.request.forms.get('captcha')
+    captcha_input = bottle.request.forms.captcha
     if captcha_correct != captcha_input:
         return bottle.HTTPResponse(messages['wrongCaptcha'], 400)
 
     # Record URL.
-    url = bottle.request.forms.get('url')
+    url = bottle.request.forms.url
     if not validators.url(url):
         return bottle.HTTPResponse(messages['invalidURL'], 400)
     send_mail(page, url)
