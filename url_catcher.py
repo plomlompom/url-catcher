@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 import bottle
 import validators
 import html
