@@ -49,7 +49,7 @@ os.makedirs(lists_dir, exist_ok=True)
 def atomic_write(path, content, mode):
     """Atomic write/append to file."""
     _, tmpPath = tempfile.mkstemp()
-    if 'a' == mode:
+    if 'a' == mode and os.path.exists(path):
         shutil.copy2(path, tmpPath)
     f = open(tmpPath, mode)
     f.write(content)
